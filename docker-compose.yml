@@ -1,0 +1,23 @@
+version: "3.7"
+services:
+  app:
+     container_name: "feat-user"
+     build:
+       context: .
+       dockerfile: Dockerfile
+     ports:
+     - 8080:8080
+     environment:
+       DATABASE_URL: "mongodb://db:27017"
+       DATABASE: "user"
+       ESTIMATION_URL: "https://estimation-servece.herokuapp.com/estimate"
+     depends_on:
+       - db
+     links:
+       - db
+  db:
+    image: mongo:latest
+    restart: always
+    container_name: "db"
+    ports:
+      - 27017:27017
